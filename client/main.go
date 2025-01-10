@@ -1,19 +1,16 @@
 package main
 
 import (
+	"go/types"
 	"log"
 	"math"
 
 	"github.com/gorilla/websocket"
+	"github.com/khaleelsyed/game_server/types"
 	"golang.org/x/exp/rand"
 )
 
-const wsServerEndpoint = "ws://localhost:40000"
-
-type LoginData struct {
-	ClientID int    `json:"client_id"`
-	Username string `json:"username"`
-}
+const wsServerEndpoint = "ws://localhost:40000/ws"
 
 type GameClient struct {
 	conn     *websocket.Conn
@@ -22,7 +19,7 @@ type GameClient struct {
 }
 
 func (c *GameClient) login() error {
-	return c.conn.WriteJSON(LoginData{
+	return c.conn.WriteJSON(types.LoginData{
 		ClientID: c.clientID,
 		Username: c.Username,
 	})
